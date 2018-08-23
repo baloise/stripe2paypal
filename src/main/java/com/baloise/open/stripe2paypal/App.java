@@ -3,10 +3,7 @@
  */
 package com.baloise.open.stripe2paypal;
 
-/**
- * Hello world!
- *
- */
+/** Hello world! */
 public class App {
     public static final String STRIPE_API_KEY = "STRIPE_API_KEY";
 
