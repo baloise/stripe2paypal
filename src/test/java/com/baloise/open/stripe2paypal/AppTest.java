@@ -3,10 +3,9 @@
  */
 package com.baloise.open.stripe2paypal;
 
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.hamcrest.MatcherAssert;
@@ -17,6 +16,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import com.baloise.open.stripe2paypal.csv.PayPalMonthlyStatementCSVWriter;
+import com.baloise.open.stripe2paypal.model.BalanceTransactionPayPalMonthlyStatementCSVRowMapping;
+import com.baloise.open.stripe2paypal.model.PayPalMonthlyStatementCSVRow;
 import com.stripe.Stripe;
 import com.stripe.model.BalanceTransaction;
 import com.stripe.model.BalanceTransactionCollection;
@@ -25,31 +27,23 @@ import com.stripe.model.BalanceTransactionCollection;
  * @author Markus Tiede
  */
 class AppTest {
-    /**
-     * @throws java.lang.Exception
-     */
+    /** @throws java.lang.Exception */
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
         Stripe.apiKey = System.getenv(App.STRIPE_API_KEY);
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
+    /** @throws java.lang.Exception */
     @AfterAll
     static void tearDownAfterClass() throws Exception {
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
+    /** @throws java.lang.Exception */
     @BeforeEach
     void setUp() throws Exception {
     }
 
-    /**
-     * @throws java.lang.Exception
-     */
+    /** @throws java.lang.Exception */
     @AfterEach
     void tearDown() throws Exception {
     }
@@ -67,24 +61,19 @@ class AppTest {
     void testBalanceTransactions() throws Exception {
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("type", "charge");
-        Iterable<BalanceTransaction> list = BalanceTransaction.list(params).autoPagingIterable(params);
-
+        Iterable<BalanceTransaction> balIt = BalanceTransaction.list(params).autoPagingIterable(params);
+        List<PayPalMonthlyStatementCSVRow> balList = new LinkedList<>();
         int i = 0;
-        for (BalanceTransaction t : list) {
-            ZonedDateTime created = Instant.ofEpochSecond(t.getCreated()).atZone(ZoneOffset.UTC);
-            System.out.println(created.toLocalDate() + " " + created.toLocalTime());
-            System.out.println(t.getDescription());
-            System.out.println(t.getCurrency().toUpperCase());
-            System.out.println(t.getAmount());
-            System.out.println(-1 * t.getFee());
-            System.out.println(t.getNet());
-            System.out.println(t.getId());
+        for (BalanceTransaction t : balIt) {
+            balList.add(new BalanceTransactionPayPalMonthlyStatementCSVRowMapping(t)
+                    .map().getPaypalMonthlyStatementRow());
 
-            System.out.println();
             i++;
-            if (i == 1) {
+            if (i == 100) {
                 break;
             }
         }
+
+        PayPalMonthlyStatementCSVWriter.write(balList, "target/MSR-stripe-yyyymm.csv");
     }
 }
