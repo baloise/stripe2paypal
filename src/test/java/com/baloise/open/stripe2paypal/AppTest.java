@@ -69,7 +69,7 @@ class AppTest {
                     .map().getPaypalMonthlyStatementRow());
 
             i++;
-            if (i == 100) {
+            if (i == 5) {
                 break;
             }
         }
