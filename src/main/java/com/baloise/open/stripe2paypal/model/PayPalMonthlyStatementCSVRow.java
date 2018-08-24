@@ -41,8 +41,9 @@ public class PayPalMonthlyStatementCSVRow {
     public static final String BALANCE_COLUMN_NAME = "Balance";
     public static final byte BALANCE_MAX_LENGTH = 26;
     
+    // SPEC states max length of 24; but STRIPE one is longer!
     public static final String TRANSACTION_ID_COLUMN_NAME = "Transaction ID";
-    public static final byte TRANSACTION_ID_MAX_LENGTH = 24;
+    public static final byte TRANSACTION_ID_MAX_LENGTH = 28;
     
     public static final String FROM_EMAIL_ADDRESS_COLUMN_NAME = "From Email Address";
     public static final short FROM_EMAIL_ADDRESS_MAX_LENGTH = 200;

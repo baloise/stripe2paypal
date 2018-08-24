@@ -7,7 +7,9 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 
+import com.stripe.exception.StripeException;
 import com.stripe.model.BalanceTransaction;
+import com.stripe.model.Charge;
 
 /**
  * @author Markus Tiede
@@ -26,7 +28,7 @@ public class BalanceTransactionPayPalMonthlyStatementCSVRowMapping {
         this.stripeBalanceTransaction = stripeBalanceTransaction;
     }
 
-    public BalanceTransactionPayPalMonthlyStatementCSVRowMapping map() {
+    public BalanceTransactionPayPalMonthlyStatementCSVRowMapping map() throws StripeException {
         ZonedDateTime created = Instant.ofEpochSecond(
                                     stripeBalanceTransaction.getCreated())
                                         .atZone(ZoneOffset.UTC);
@@ -38,18 +40,18 @@ public class BalanceTransactionPayPalMonthlyStatementCSVRowMapping {
                 stripeBalanceTransaction.getDescription(),
                 stripeBalanceTransaction.getCurrency().toUpperCase(),
                 stripeBalanceTransaction.getAmount(),
-                -1 * stripeBalanceTransaction.getFee(),
+                Math.negateExact(stripeBalanceTransaction.getFee()),
                 stripeBalanceTransaction.getNet(),
                 UNDEFINED_NUMERIC_VALUE,
-                stripeBalanceTransaction.getId().substring(5, stripeBalanceTransaction.getId().length() - 1),
+                stripeBalanceTransaction.getId(),
                 "",
                 "",
                 "",
                 "",
                 UNDEFINED_NUMERIC_VALUE,
                 UNDEFINED_NUMERIC_VALUE,
-                "",
-                "");
+                Charge.retrieve(stripeBalanceTransaction.getSource()).getMetadata().get("Policy"),
+                stripeBalanceTransaction.getSource());
 
         return this;
     }
