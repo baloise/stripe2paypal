@@ -25,6 +25,7 @@ hs_err_pid*
 # IDE Files #
 .project
 .classpath
+bin/
 
 # Maven Files #
 target/
