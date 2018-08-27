@@ -5,6 +5,7 @@ package com.baloise.open.stripe2paypal;
 
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,8 +47,11 @@ class AppTest {
         params.put("type", "charge");
 
         Map<String, Object> createdParams = new HashMap<String, Object>();
-        createdParams.put("gte", ZonedDateTime.now(ZoneOffset.UTC).minusWeeks(4).toEpochSecond());
-        createdParams.put("lte", ZonedDateTime.now(ZoneOffset.UTC).minusWeeks(2).toEpochSecond());
+        ZonedDateTime start = ZonedDateTime.now(ZoneOffset.UTC).minusWeeks(4);
+        createdParams.put("gte", start.toEpochSecond());
+
+        ZonedDateTime end = ZonedDateTime.now(ZoneOffset.UTC).minusWeeks(2);
+        createdParams.put("lte", end.toEpochSecond());
         params.put("created", createdParams);
         
         Iterable<BalanceTransaction> balIt = BalanceTransaction.list(params).autoPagingIterable(params);
@@ -57,6 +61,8 @@ class AppTest {
                     .map().getPaypalMonthlyStatementRow());
         }
 
-        PayPalMonthlyStatementCSVWriter.write(balList, "target/MSR-stripe-yyyymm.csv");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuuMMdd");
+        PayPalMonthlyStatementCSVWriter.write(balList, "target/MSR-stripe-"
+                + start.format(formatter) + "-" + end.format(formatter) + ".csv");
     }
 }
