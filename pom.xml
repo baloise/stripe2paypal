@@ -100,6 +100,8 @@
         <artifactId>maven-assembly-plugin</artifactId>
         <version>3.1.0</version>
         <configuration>
+          <finalName>stripe2paypal-csv</finalName>
+          <appendAssemblyId>false</appendAssemblyId>
           <descriptorRefs>
             <descriptorRef>jar-with-dependencies</descriptorRef>
           </descriptorRefs>
