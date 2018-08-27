@@ -22,6 +22,8 @@ import com.baloise.open.stripe2paypal.model.PayPalMonthlyStatementCSVRow;
  * @author Markus Tiede
  */
 public class PayPalMonthlyStatementCSVWriter {
+    public static final int MIN_STRING_LENGTH = 0;
+
     /**
      * writeToCSV
      */
@@ -29,27 +31,27 @@ public class PayPalMonthlyStatementCSVWriter {
         final CellProcessor[] processors = new CellProcessor[] {
                 new FmtLocalDate(DateTimeFormatter.ofPattern(
                         PayPalMonthlyStatementCSVRow.COMPLETION_DATE_FORMAT),
-                            new StrMinMax(0, PayPalMonthlyStatementCSVRow.COMPLETION_DATE_MAX_LENGTH)),
+                            new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.COMPLETION_DATE_MAX_LENGTH)),
                 new FmtLocalTime(DateTimeFormatter.ofPattern(
                         PayPalMonthlyStatementCSVRow.COMPLETION_TIME_FORMAT),
-                            new StrMinMax(0, PayPalMonthlyStatementCSVRow.COMPLETION_TIME_MAX_LENGTH)),
+                            new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.COMPLETION_TIME_MAX_LENGTH)),
 
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.TIME_ZONE_MAX_LENGTH),
-                new Optional(new StrMinMax(0, PayPalMonthlyStatementCSVRow.DESCRIPTION_MAX_LENGTH)),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.CURRENCY_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.GROSS_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.FEE_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.NET_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.BALANCE_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.TRANSACTION_ID_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.FROM_EMAIL_ADDRESS_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.NAME_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.BANK_NAME_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.BANK_ACCOUNT_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.SHIPPING_AND_HANDLING_AMOUNT_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.SALES_TAX_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.INVOICE_ID_MAX_LENGTH),
-                new StrMinMax(0, PayPalMonthlyStatementCSVRow.REFERENCE_TXN_ID_MAX_LENGTH) };
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.TIME_ZONE_MAX_LENGTH),
+                new Optional(new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.DESCRIPTION_MAX_LENGTH)),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.CURRENCY_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.GROSS_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.FEE_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.NET_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.BALANCE_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.TRANSACTION_ID_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.FROM_EMAIL_ADDRESS_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.NAME_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.BANK_NAME_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.BANK_ACCOUNT_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.SHIPPING_AND_HANDLING_AMOUNT_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.SALES_TAX_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.INVOICE_ID_MAX_LENGTH),
+                new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.REFERENCE_TXN_ID_MAX_LENGTH) };
 
         try (ICsvDozerBeanWriter beanWriter = new CsvDozerBeanWriter(new FileWriter(fileName),
                 CsvPreference.STANDARD_PREFERENCE)) {

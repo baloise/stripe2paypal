@@ -5,11 +5,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.baloise.open.stripe2paypal</groupId>
-  <artifactId>monthly-statement-csv</artifactId>
+  <artifactId>stripe2paypal-csv</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>monthly-statement-csv</name>
+  <name>stripe2paypal-csv</name>
   <url>https://github.com/baloise/stripe2paypal</url>
 
   <properties>
