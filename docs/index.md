@@ -18,3 +18,5 @@ Make sure you use SSH connection to github for auto-tag publishing!
 ```
 mvn release:prepare
 ```
+
+The actual release artefact is then automatically being build and published via travis by our technical [Baloise Open Source](https://github.com/baopso) user.
