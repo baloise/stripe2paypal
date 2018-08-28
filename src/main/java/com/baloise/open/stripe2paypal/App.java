@@ -86,7 +86,7 @@ public class App {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            formatter.printHelp("stripe2paypal-csv", options);
+            formatter.printHelp("java -jar stripe2paypal-csv.jar", options);
 
             System.exit(1);
         }
