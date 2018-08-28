@@ -10,3 +10,11 @@ mvn org.apache.maven.plugins:maven-eclipse-plugin:2.8:eclipse && mvn eclipse:ecl
 ### STRIPE API Key
 
 ![](requiredRestrictedApiKeyPermissions.png)
+
+### a release
+
+Make sure you use SSH connection to github for auto-tag publishing!
+
+```
+mvn release:prepare
+```
