@@ -3,12 +3,11 @@
  */
 package com.baloise.open.stripe2paypal;
 
+import java.io.File;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import org.hamcrest.MatcherAssert;
@@ -16,9 +15,8 @@ import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import com.baloise.open.stripe2paypal.csv.PayPalMonthlyStatementCSVWriter;
-import com.baloise.open.stripe2paypal.model.BalanceTransactionPayPalMonthlyStatementCSVRowMapping;
-import com.baloise.open.stripe2paypal.model.PayPalMonthlyStatementCSVRow;
+import com.baloise.open.stripe2paypal.report.PaypalMonthlyReportFromStripe;
+import com.baloise.open.stripe2paypal.report.Report;
 import com.stripe.Stripe;
 import com.stripe.model.BalanceTransaction;
 import com.stripe.model.BalanceTransactionCollection;
@@ -42,27 +40,11 @@ class AppTest {
     }
 
     @Test
-    void testBalanceTransactions() throws Exception {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("type", "charge");
-
-        Map<String, Object> createdParams = new HashMap<String, Object>();
-        ZonedDateTime start = ZonedDateTime.now(ZoneOffset.UTC).minusWeeks(4);
-        createdParams.put("gte", start.toEpochSecond());
-
-        ZonedDateTime end = ZonedDateTime.now(ZoneOffset.UTC).minusWeeks(2);
-        createdParams.put("lte", end.toEpochSecond());
-        params.put("created", createdParams);
-        
-        Iterable<BalanceTransaction> balIt = BalanceTransaction.list(params).autoPagingIterable(params);
-        List<PayPalMonthlyStatementCSVRow> balList = new LinkedList<>();
-        for (BalanceTransaction t : balIt) {
-            balList.add(new BalanceTransactionPayPalMonthlyStatementCSVRowMapping(t)
-                    .map().getPaypalMonthlyStatementRow());
-        }
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("uuuuMMdd");
-        PayPalMonthlyStatementCSVWriter.write(balList, "target/MSR-stripe-"
-                + start.format(formatter) + "-" + end.format(formatter) + ".csv");
+    void testBalanceTransactionReportCreation() throws Exception {
+        Report r = new PaypalMonthlyReportFromStripe(
+                new File("target/").toPath(), 
+                "2018-07-01T00:00:00", 
+                "P31D");
+        r.create();
     }
 }

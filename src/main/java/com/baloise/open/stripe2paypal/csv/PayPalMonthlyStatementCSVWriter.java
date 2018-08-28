@@ -3,6 +3,7 @@
  */
 package com.baloise.open.stripe2paypal.csv;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -27,7 +28,7 @@ public class PayPalMonthlyStatementCSVWriter {
     /**
      * writeToCSV
      */
-    public static void write(List<PayPalMonthlyStatementCSVRow> rows, String fileName) throws Exception {
+    public static void write(List<PayPalMonthlyStatementCSVRow> rows, File file) throws Exception {
         final CellProcessor[] processors = new CellProcessor[] {
                 new FmtLocalDate(DateTimeFormatter.ofPattern(
                         PayPalMonthlyStatementCSVRow.COMPLETION_DATE_FORMAT),
@@ -53,7 +54,7 @@ public class PayPalMonthlyStatementCSVWriter {
                 new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.INVOICE_ID_MAX_LENGTH),
                 new StrMinMax(MIN_STRING_LENGTH, PayPalMonthlyStatementCSVRow.REFERENCE_TXN_ID_MAX_LENGTH) };
 
-        try (ICsvDozerBeanWriter beanWriter = new CsvDozerBeanWriter(new FileWriter(fileName),
+        try (ICsvDozerBeanWriter beanWriter = new CsvDozerBeanWriter(new FileWriter(file),
                 CsvPreference.STANDARD_PREFERENCE)) {
 
             // configure the mapping from the fields to the CSV columns

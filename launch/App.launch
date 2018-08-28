@@ -6,10 +6,13 @@
     <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
         <listEntry value="1"/>
     </listAttribute>
+    <mapAttribute key="org.eclipse.debug.core.environmentVariables">
+        <!-- <mapEntry key="STRIPE_API_KEY" value="REPLACE_ME"/> --> 
+    </mapAttribute>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_EXCLUDE_TEST_CODE" value="true"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="com.baloise.open.stripe2paypal.App"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--stripe-api-key REPLACE_ME"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="--stripe-api-key SECRET --output-dir target -report-style monthly-statement --start-date-and-time 2018-08-01T00:00:00 --duration P14D"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="stripe2paypal"/>
 </launchConfiguration>
