@@ -4,7 +4,7 @@
 
   <groupId>com.baloise.open.stripe2paypal</groupId>
   <artifactId>stripe2paypal-csv</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>stripe2paypal-csv</name>
@@ -17,7 +17,7 @@
   <scm>
     <url>https://github.com/baloise/stripe2paypal.git</url>
     <connection>scm:git:git@github.com:baloise/stripe2paypal.git</connection>
-    <tag>stripe2paypal-csv-0.0.1</tag>
+    <tag>HEAD</tag>
   </scm>
   <ciManagement>
     <system>Travis CI</system>
