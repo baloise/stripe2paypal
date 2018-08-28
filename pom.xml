@@ -18,7 +18,7 @@
   </organization>
   <scm>
     <url>https://github.com/baloise/stripe2paypal.git</url>
-    <connection>scm:git:https://github.com/baloise/stripe2paypal.git</connection>
+    <connection>scm:git:git@github.com:baloise/stripe2paypal.git</connection>
   </scm>
   <ciManagement>
     <system>Travis CI</system>
