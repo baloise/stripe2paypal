@@ -25,54 +25,48 @@ import com.stripe.model.Charge;
 public class BalanceTransactionPayPalMonthlyStatementCSVRowMapping {
     public static final int UNKNOWN_NUMERIC_VALUE = -1;
 
-    private BalanceTransaction stripeBalanceTransaction;
+    private BalanceTransaction stripeTransaction;
     private PayPalMonthlyStatementCSVRow paypalMonthlyStatementRow;
 
     /**
-     * @param stripeBalanceTransaction
+     * @param stripeTransaction
      */
-    public BalanceTransactionPayPalMonthlyStatementCSVRowMapping(BalanceTransaction stripeBalanceTransaction) {
+    public BalanceTransactionPayPalMonthlyStatementCSVRowMapping(BalanceTransaction stripeTransaction) {
         super();
-        this.stripeBalanceTransaction = stripeBalanceTransaction;
+        this.stripeTransaction = stripeTransaction;
     }
 
     public BalanceTransactionPayPalMonthlyStatementCSVRowMapping map() throws StripeException {
-        ZonedDateTime created = Instant.ofEpochSecond(stripeBalanceTransaction.getCreated())
-                                        .atZone(ZoneOffset.systemDefault());
-        
-        String currencyCode = StringUtils.upperCase(stripeBalanceTransaction.getCurrency());
+        String currencyCode = StringUtils.upperCase(stripeTransaction.getCurrency());
         CurrencyUnit currency = Monetary.getCurrency(currencyCode);
+
+        MonetaryAmountFactory<?> amountFac = Monetary.getDefaultAmountFactory();
         
-        MonetaryAmountFactory<?> amountFactory = Monetary.getDefaultAmountFactory();
-        MonetaryAmount chfAmount = amountFactory
-                .setCurrency(currency).setNumber(stripeBalanceTransaction.getAmount() / 100d)
-                .create();
-        MonetaryAmount chfFee = amountFactory
-                .setCurrency(currency).setNumber(stripeBalanceTransaction.getFee() / 100d)
-                .create();
-        MonetaryAmount chfNet = amountFactory
-                .setCurrency(currency).setNumber(stripeBalanceTransaction.getNet() / 100d)
-                .create();
-        
-        paypalMonthlyStatementRow = new PayPalMonthlyStatementCSVRow(
-                created.toLocalDate(),
-                created.toLocalTime(),
-                created.getZone(),
-                "description", // description
-                currency,
-                chfAmount,
-                chfFee,
-                chfNet,
-                Money.of(UNKNOWN_NUMERIC_VALUE, currency),
-                stripeBalanceTransaction.getId(),
+        MonetaryAmount amount = amountFac.setCurrency(currency)
+                .setNumber(stripeTransaction.getAmount() / 100d).create();
+        MonetaryAmount fee = amountFac.setCurrency(currency)
+                .setNumber(stripeTransaction.getFee() / 100d).create();
+        MonetaryAmount net = amountFac.setCurrency(currency)
+                .setNumber(stripeTransaction.getNet() / 100d).create();
+
+        ZonedDateTime created = Instant.ofEpochSecond(stripeTransaction.getCreated())
+                .atZone(ZoneOffset.systemDefault());
+        paypalMonthlyStatementRow = new PayPalMonthlyStatementCSVRow(created.toLocalDate(), created.toLocalTime(),
+                created.getZone(), "description", // description
+                currency, 
+                amount, 
+                fee, 
+                net, 
+                Money.of(UNKNOWN_NUMERIC_VALUE, currency), 
+                stripeTransaction.getId(), 
                 "", // fromEmailAddress
                 "", // name
                 "", // bankName
                 "", // bankAccount
                 Money.of(0, currency), // shippingAndHandlingAmount
                 Money.of(UNKNOWN_NUMERIC_VALUE, currency),
-                Charge.retrieve(stripeBalanceTransaction.getSource()).getMetadata().get("Policy"),
-                stripeBalanceTransaction.getSource());
+                Charge.retrieve(stripeTransaction.getSource()).getMetadata().get("Policy"),
+                stripeTransaction.getSource());
 
         return this;
     }
@@ -81,7 +75,7 @@ public class BalanceTransactionPayPalMonthlyStatementCSVRowMapping {
      * @return the stripeBalanceTransaction
      */
     public BalanceTransaction getStripeBalanceTransaction() {
-        return stripeBalanceTransaction;
+        return stripeTransaction;
     }
 
     /**

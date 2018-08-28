@@ -24,8 +24,8 @@ import org.javamoney.moneta.format.CurrencyStyle;
  */
 public class PayPalMonthlyStatementCSVRow {
     public static final String MONEY_FORMAT_PATTERN = "##########0.##";
-    public static final MonetaryAmountFormat MONEY_FORMAT = MonetaryFormats.getAmountFormat(AmountFormatQueryBuilder.
-            of(Locale.getDefault()).set(CurrencyStyle.NUMERIC_CODE)
+    public static final MonetaryAmountFormat MONEY_FORMAT = MonetaryFormats.getAmountFormat(
+            AmountFormatQueryBuilder.of(Locale.getDefault()).set(CurrencyStyle.NUMERIC_CODE)
                 .set("pattern", MONEY_FORMAT_PATTERN).build());
     
     public static final String COMPLETION_DATE_COLUMN_NAME = "Date";
