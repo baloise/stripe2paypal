@@ -5,6 +5,17 @@ package com.baloise.open.stripe2paypal.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Locale;
+
+import javax.money.CurrencyUnit;
+import javax.money.MonetaryAmount;
+import javax.money.format.AmountFormatQueryBuilder;
+import javax.money.format.MonetaryAmountFormat;
+import javax.money.format.MonetaryFormats;
+
+import org.apache.commons.lang3.StringUtils;
+import org.javamoney.moneta.format.CurrencyStyle;
 
 /**
  * @author Markus Tiede
@@ -12,6 +23,11 @@ import java.time.LocalTime;
  * according to {@link https://www.paypalobjects.com/webstatic/en_US/developer/docs/pdf/PP_GenMonthlyStatementReport.pdf}
  */
 public class PayPalMonthlyStatementCSVRow {
+    public static final String MONEY_FORMAT_PATTERN = "##########0.##";
+    public static final MonetaryAmountFormat MONEY_FORMAT = MonetaryFormats.getAmountFormat(AmountFormatQueryBuilder.
+            of(Locale.getDefault()).set(CurrencyStyle.NUMERIC_CODE)
+                .set("pattern", MONEY_FORMAT_PATTERN).build());
+    
     public static final String COMPLETION_DATE_COLUMN_NAME = "Date";
     public static final String COMPLETION_DATE_FORMAT = "MM/dd/uuuu";
     public static final byte COMPLETION_DATE_MAX_LENGTH = 10;
@@ -71,40 +87,40 @@ public class PayPalMonthlyStatementCSVRow {
 
     private LocalDate completionDate;
     private LocalTime completionTime;
-    private String timeZone;
+    private ZoneId timeZone;
     private String description;
-    private String currency;
-    private long gross;
-    private long fee;
-    private long net;
-    private long balance;
+    private CurrencyUnit currency;
+    private MonetaryAmount gross;
+    private MonetaryAmount fee;
+    private MonetaryAmount net;
+    private MonetaryAmount balance;
     private String transactionID;
     private String fromEmailAddress;
     private String name;
     private String bankName;
     private String bankAccount;
-    private long shippingAndHandlingAmount;
-    private long salesTax;
+    private MonetaryAmount shippingAndHandlingAmount;
+    private MonetaryAmount salesTax;
     private String invoiceId;
     private String referenceTxnId;
     
     public static final String[] FIELD_MAPPING = new String[] { 
             "completionDate", // 
             "completionTime", // 
-            "timeZone", // 
+            "timeZoneFmt", // 
             "description", // 
-            "currency", // 
-            "gross", // 
-            "fee", // 
-            "net", // 
-            "balance", // 
+            "currencyFmt", // 
+            "grossFmt", // 
+            "feeFmt", // 
+            "netFmt", // 
+            "balanceFmt", // 
             "transactionID", // 
             "fromEmailAddress", // 
             "name", // 
             "bankName", // 
             "bankAccount", // 
-            "shippingAndHandlingAmount", // 
-            "salesTax", // 
+            "shippingAndHandlingAmountFmt", // 
+            "salesTaxFmt", // 
             "invoiceId", // 
             "referenceTxnId"};// 
 
@@ -128,10 +144,10 @@ public class PayPalMonthlyStatementCSVRow {
      * @param invoiceId
      * @param referenceTxnId
      */
-    public PayPalMonthlyStatementCSVRow(LocalDate completionDate, LocalTime completionTime, String timeZone,
-            String description, String currency, long gross, long fee, long net, long balance, String transactionID,
-            String fromEmailAddress, String name, String bankName, String bankAccount, long shippingAndHandlingAmount,
-            long salesTax, String invoiceId, String referenceTxnId) {
+    public PayPalMonthlyStatementCSVRow(LocalDate completionDate, LocalTime completionTime, ZoneId timeZone,
+            String description, CurrencyUnit currency, MonetaryAmount gross, MonetaryAmount fee, MonetaryAmount net, MonetaryAmount balance, String transactionID,
+            String fromEmailAddress, String name, String bankName, String bankAccount, MonetaryAmount shippingAndHandlingAmount,
+            MonetaryAmount salesTax, String invoiceId, String referenceTxnId) {
         super();
         this.completionDate = completionDate;
         this.completionTime = completionTime;
@@ -170,8 +186,16 @@ public class PayPalMonthlyStatementCSVRow {
     /**
      * @return the timeZone
      */
-    public String getTimeZone() {
+    public ZoneId getTimeZone() {
         return timeZone;
+    }
+
+    /**
+     * @return the timeZone formatted for CSV
+     */
+    public String getTimeZoneFmt() {
+        return StringUtils.abbreviate(getTimeZone().toString(),
+                PayPalMonthlyStatementCSVRow.TIME_ZONE_MAX_LENGTH);
     }
 
     /**
@@ -184,36 +208,71 @@ public class PayPalMonthlyStatementCSVRow {
     /**
      * @return the currency
      */
-    public String getCurrency() {
+    public CurrencyUnit getCurrency() {
         return currency;
+    }
+
+    /**
+     * @return the currency formatted for CSV
+     */
+    public String getCurrencyFmt() {
+        return StringUtils.upperCase(getCurrency().getCurrencyCode());
     }
 
     /**
      * @return the gross
      */
-    public long getGross() {
+    public MonetaryAmount getGross() {
         return gross;
+    }
+
+    /**
+     * @return the gross formatted for CSV
+     */
+    public String getGrossFmt() {
+        return MONEY_FORMAT.format(getGross());
     }
 
     /**
      * @return the fee
      */
-    public long getFee() {
+    public MonetaryAmount getFee() {
         return fee;
+    }
+
+    /**
+     * @return the fee formatted for CSV
+     */
+    public String getFeeFmt() {
+        return MONEY_FORMAT.format(getFee().negate());
     }
 
     /**
      * @return the net
      */
-    public long getNet() {
+    public MonetaryAmount getNet() {
         return net;
+    }
+
+    /**
+     * @return the net formatted for CSV
+     */
+    public String getNetFmt() {
+        return MONEY_FORMAT.format(getNet());
     }
 
     /**
      * @return the balance
      */
-    public long getBalance() {
+    public MonetaryAmount getBalance() {
         return balance;
+    }
+
+    /**
+     * @return the balance formatted for CSV
+     */
+    public String getBalanceFmt() {
+        return MONEY_FORMAT.format(getBalance());
     }
 
     /**
@@ -254,15 +313,29 @@ public class PayPalMonthlyStatementCSVRow {
     /**
      * @return the shippingAndHandlingAmount
      */
-    public long getShippingAndHandlingAmount() {
+    public MonetaryAmount getShippingAndHandlingAmount() {
         return shippingAndHandlingAmount;
+    }
+
+    /**
+     * @return the shippingAndHandlingAmount formatted for CSV
+     */
+    public String getShippingAndHandlingAmountFmt() {
+        return MONEY_FORMAT.format(getShippingAndHandlingAmount());
     }
 
     /**
      * @return the salesTax
      */
-    public long getSalesTax() {
+    public MonetaryAmount getSalesTax() {
         return salesTax;
+    }
+
+    /**
+     * @return the salesTax formatted for CSV
+     */
+    public String getSalesTaxFmt() {
+        return MONEY_FORMAT.format(getSalesTax());
     }
 
     /**
@@ -279,39 +352,37 @@ public class PayPalMonthlyStatementCSVRow {
         return referenceTxnId;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    
+    
+    /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + (int) (balance ^ (balance >>> 32));
+        result = prime * result + ((balance == null) ? 0 : balance.hashCode());
         result = prime * result + ((bankAccount == null) ? 0 : bankAccount.hashCode());
         result = prime * result + ((bankName == null) ? 0 : bankName.hashCode());
         result = prime * result + ((completionDate == null) ? 0 : completionDate.hashCode());
         result = prime * result + ((completionTime == null) ? 0 : completionTime.hashCode());
         result = prime * result + ((currency == null) ? 0 : currency.hashCode());
         result = prime * result + ((description == null) ? 0 : description.hashCode());
-        result = prime * result + (int) (fee ^ (fee >>> 32));
+        result = prime * result + ((fee == null) ? 0 : fee.hashCode());
         result = prime * result + ((fromEmailAddress == null) ? 0 : fromEmailAddress.hashCode());
-        result = prime * result + (int) (gross ^ (gross >>> 32));
+        result = prime * result + ((gross == null) ? 0 : gross.hashCode());
         result = prime * result + ((invoiceId == null) ? 0 : invoiceId.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + (int) (net ^ (net >>> 32));
+        result = prime * result + ((net == null) ? 0 : net.hashCode());
         result = prime * result + ((referenceTxnId == null) ? 0 : referenceTxnId.hashCode());
-        result = prime * result + (int) (salesTax ^ (salesTax >>> 32));
-        result = prime * result + (int) (shippingAndHandlingAmount ^ (shippingAndHandlingAmount >>> 32));
+        result = prime * result + ((salesTax == null) ? 0 : salesTax.hashCode());
+        result = prime * result + ((shippingAndHandlingAmount == null) ? 0 : shippingAndHandlingAmount.hashCode());
         result = prime * result + ((timeZone == null) ? 0 : timeZone.hashCode());
         result = prime * result + ((transactionID == null) ? 0 : transactionID.hashCode());
         return result;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -323,7 +394,10 @@ public class PayPalMonthlyStatementCSVRow {
         if (getClass() != obj.getClass())
             return false;
         PayPalMonthlyStatementCSVRow other = (PayPalMonthlyStatementCSVRow) obj;
-        if (balance != other.balance)
+        if (balance == null) {
+            if (other.balance != null)
+                return false;
+        } else if (!balance.equals(other.balance))
             return false;
         if (bankAccount == null) {
             if (other.bankAccount != null)
@@ -355,14 +429,20 @@ public class PayPalMonthlyStatementCSVRow {
                 return false;
         } else if (!description.equals(other.description))
             return false;
-        if (fee != other.fee)
+        if (fee == null) {
+            if (other.fee != null)
+                return false;
+        } else if (!fee.equals(other.fee))
             return false;
         if (fromEmailAddress == null) {
             if (other.fromEmailAddress != null)
                 return false;
         } else if (!fromEmailAddress.equals(other.fromEmailAddress))
             return false;
-        if (gross != other.gross)
+        if (gross == null) {
+            if (other.gross != null)
+                return false;
+        } else if (!gross.equals(other.gross))
             return false;
         if (invoiceId == null) {
             if (other.invoiceId != null)
@@ -374,16 +454,25 @@ public class PayPalMonthlyStatementCSVRow {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (net != other.net)
+        if (net == null) {
+            if (other.net != null)
+                return false;
+        } else if (!net.equals(other.net))
             return false;
         if (referenceTxnId == null) {
             if (other.referenceTxnId != null)
                 return false;
         } else if (!referenceTxnId.equals(other.referenceTxnId))
             return false;
-        if (salesTax != other.salesTax)
+        if (salesTax == null) {
+            if (other.salesTax != null)
+                return false;
+        } else if (!salesTax.equals(other.salesTax))
             return false;
-        if (shippingAndHandlingAmount != other.shippingAndHandlingAmount)
+        if (shippingAndHandlingAmount == null) {
+            if (other.shippingAndHandlingAmount != null)
+                return false;
+        } else if (!shippingAndHandlingAmount.equals(other.shippingAndHandlingAmount))
             return false;
         if (timeZone == null) {
             if (other.timeZone != null)
