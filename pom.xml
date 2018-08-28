@@ -12,6 +12,19 @@
   <name>stripe2paypal-csv</name>
   <url>https://github.com/baloise/stripe2paypal</url>
 
+  <organization>
+    <name>Baloise Group</name>
+    <url>https://www.baloise.com</url>
+  </organization>
+  <scm>
+    <url>https://github.com/baloise/stripe2paypal.git</url>
+    <connection>scm:git:https://github.com/baloise/stripe2paypal.git</connection>
+  </scm>
+  <ciManagement>
+    <system>Travis CI</system>
+    <url>https://travis-ci.org/baloise/stripe2paypal</url>
+  </ciManagement>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
