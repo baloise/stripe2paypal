@@ -21,6 +21,9 @@ import com.stripe.Stripe;
 /** Application */
 public class App {
     public static final String STRIPE_API_KEY_ENV = "STRIPE_API_KEY";
+
+    public static final String PAYPAL_CLIENT_ID_KEY_ENV = "PAYPAL_CLIENT_ID";
+    public static final String PAYPAL_CLIENT_SECRET_KEY_ENV = "PAYPAL_CLIENT_SECRET";
     
     public static final String STRIPE_API_KEY_ARG_LONG = "stripe-api-key";
     public static final String OUTPUT_DIR_ARG_LONG = "output-dir";

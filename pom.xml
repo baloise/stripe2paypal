@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.baloise.open.stripe2paypal</groupId>
@@ -33,6 +35,15 @@
     <junit.platform.version>1.2.0</junit.platform.version>
   </properties>
 
+ <repositories>
+    <repository>
+      <id>oss-sonatype</id>
+      <name>Sonatype OSS maven repo</name>
+<!-- https://support.sonatype.com/hc/en-us/articles/213465088-Maven-is-unable-to-connect-to-Nexus-after-configuring-Nexus-to-use-SSL- -->
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>commons-cli</groupId>
@@ -55,6 +66,12 @@
       <groupId>com.stripe</groupId>
       <artifactId>stripe-java</artifactId>
       <version>6.9.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.paypal.sdk</groupId>
+      <artifactId>rest-api-sdk</artifactId>
+      <version>2.0.0-SNAPSHOT</version>
     </dependency>
 
     <dependency>
