@@ -4,9 +4,6 @@
 package com.baloise.open.stripe2paypal;
 
 import java.io.File;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +21,7 @@ import com.stripe.model.BalanceTransactionCollection;
 /**
  * @author Markus Tiede
  */
-class AppTest {
+class StripeTest {
     /** @throws java.lang.Exception */
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
