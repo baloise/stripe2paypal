@@ -24,7 +24,7 @@ class PaypalTest {
 
     /** @throws java.lang.Exception */
     @BeforeEach
-    static void setUpBeforeClass() throws Exception {
+    void setUpBeforeClass() throws Exception {
         // env = new PayPalEnvironment.Sandbox(CLIENT_ID, CLIENT_SECRET);
     }
 
