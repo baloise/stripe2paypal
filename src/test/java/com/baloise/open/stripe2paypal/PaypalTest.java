@@ -4,6 +4,7 @@
 package com.baloise.open.stripe2paypal;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.paypal.core.PayPalEnvironment;
@@ -24,15 +25,17 @@ class PaypalTest {
     /** @throws java.lang.Exception */
     @BeforeEach
     static void setUpBeforeClass() throws Exception {
-        env = new PayPalEnvironment.Sandbox(CLIENT_ID, CLIENT_SECRET);
+        // env = new PayPalEnvironment.Sandbox(CLIENT_ID, CLIENT_SECRET);
     }
 
     @Test
+    @Disabled
     void testBalanceTransactionsNotEmpty() throws Exception {
         PayPalHttpClient client = new PayPalHttpClient(env);
     }
 
     @Test
+    @Disabled
     void testBalanceTransactionReportCreation() throws Exception {
     }
 }
