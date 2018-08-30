@@ -37,7 +37,7 @@ pipeline {
 
         stage("Nexus Lifecycle") {
             steps {
-                mavenbuild mavenArgs: "dependency:copy-dependencies"
+                mavenbuild mavenArgs: "-DskipTests=true dependency:copy-dependencies"
                 nexusPolicyEvaluation failBuildOnNetworkError: false, 
                     iqApplication: 'com.baloise.open.stripe2paypal.stripe2paypal-csv', 
                     iqScanPatterns: [[scanPattern: 'target/dependency/*.jar']], 
