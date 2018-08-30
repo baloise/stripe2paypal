@@ -31,9 +31,7 @@ pipeline {
 
         stage("Maven") {
             steps {
-                script {
-                    sh "mvn clean verify -DskipTests"
-                }
+                mavenbuild mavenArgs: "-DskipTests=true"
             }
         }
     }
