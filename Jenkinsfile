@@ -34,5 +34,16 @@ pipeline {
                 mavenbuild mavenArgs: "-DskipTests=true"
             }
         }
+
+        stage("Nexus Lifecycle") {
+            steps {
+                mavenbuild mavenArgs: "dependency:copy-dependencies"
+                nexusPolicyEvaluation failBuildOnNetworkError: false, 
+                    iqApplication: 'com.baloise.open.stripe2paypal.stripe2paypal-csv', 
+                    iqScanPatterns: [[scanPattern: 'target/dependency/*.jar']], 
+                    iqStage: 'build', 
+                    jobCredentialsId: ''
+            }
+        }
     }
 }
