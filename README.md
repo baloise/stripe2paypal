@@ -8,7 +8,6 @@ mvn clean verify -DskipTests && java -jar target/stripe2paypal-csv.jar --stripe-
 ```
 
 ## Commandline usage
-
 ```
 usage: java -jar stripe2paypal-csv.jar
  -d,--duration <arg>              a duration (format ISO-8601) given as
@@ -21,6 +20,7 @@ usage: java -jar stripe2paypal-csv.jar
  -s,--start-date-and-time <arg>   a local start date and time e. g.
                                   '2018-07-01T23:59:59'
 ```
+
 ## setup [docs](docs/index.md)
 
 ## our [code of conduct](https://baloise.github.io/open-source/docs/md/guides/governance.html#code-of-conduct)
