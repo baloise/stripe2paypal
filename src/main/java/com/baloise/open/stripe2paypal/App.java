@@ -6,6 +6,12 @@ package com.baloise.open.stripe2paypal;
 import java.io.File;
 import java.nio.file.Path;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -14,6 +20,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
+import com.baloise.open.stripe2paypal.ext.TrustAllX509TrustManager;
 import com.baloise.open.stripe2paypal.report.PaypalMonthlyReportFromStripe;
 import com.baloise.open.stripe2paypal.report.Report;
 import com.stripe.Stripe;
@@ -54,6 +61,11 @@ public class App {
         CommandLine cmd;
 
         try {
+            SSLContext sc = SSLContext.getInstance("TLS");
+            sc.init(null, new TrustManager[] { new TrustAllX509TrustManager() }, new java.security.SecureRandom());
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            HttpsURLConnection.setDefaultHostnameVerifier(new HostnameVerifier() {public boolean verify(String string, SSLSession ssls) {return true;}});
+            
             cmd = parser.parse(options, args);
             String apiKey;
             if (System.getenv().containsKey(STRIPE_API_KEY_ENV)) {

@@ -11,7 +11,9 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
+import com.baloise.open.stripe2paypal.ext.TrustAllX509TrustManagerExtension;
 import com.baloise.open.stripe2paypal.report.PaypalMonthlyReportFromStripe;
 import com.baloise.open.stripe2paypal.report.Report;
 import com.stripe.Stripe;
@@ -21,6 +23,7 @@ import com.stripe.model.BalanceTransactionCollection;
 /**
  * @author Markus Tiede
  */
+@ExtendWith(TrustAllX509TrustManagerExtension.class)
 class StripeTest {
     /** @throws java.lang.Exception */
     @BeforeAll
