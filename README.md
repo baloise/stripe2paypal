@@ -1,7 +1,12 @@
 # stripe2paypal
 
 ## idea
-<img src="http://yuml.me/diagram/nofunky/usecase/[User]-(Paypal),[User]-(STRIPE),(Paypal)>(monthly statement report),(STRIPE)-(stripe2paypal), (stripe2paypal)>(monthly statement report),(monthly statement report)<(unified post processing).svg"/>
+
+<!--- 
+[merchant]-(Paypal{bg:steelblue}),[merchant]-(STRIPE{bg:steelblue}),(Paypal)>(monthly statement report),(STRIPE)<(stripe2paypal{bg:gold}), (stripe2paypal)>(monthly statement report),(monthly statement report)<(unified post processing{bg:limegreen}),(STRIPE)-(note:API{bg:beige}),(monthly statement report)-(note:CSV{bg:beige})
+-->
+
+<img src="http://yuml.me/2c447197.svg"/>
 
 Conversion of [Stripe BalanceTransactions](https://stripe.com/docs/api#balance) to a [Paypal like "monthly statement"-report](https://www.paypalobjects.com/webstatic/en_US/developer/docs/pdf/PP_GenMonthlyStatementReport.pdf).
 
