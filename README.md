@@ -17,6 +17,7 @@ mvn clean verify -DskipTests && java -jar target/stripe2paypal-csv.jar \
 ```
 
 ## Commandline usage
+
 ```
 usage: java -jar stripe2paypal-csv.jar
  -d,--duration <arg>              a duration (format ISO-8601) given as
