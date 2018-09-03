@@ -11,7 +11,7 @@ Conversion of [Stripe BalanceTransactions](https://stripe.com/docs/api#balance) 
 mvn clean verify -DskipTests && java -jar target/stripe2paypal-csv.jar \
    --stripe-api-key SECRET \
    --output-dir target \
-   -report-style monthly-statement \
+   --report-style monthly-statement \
    --start-date-and-time 2018-07-01T00:00:00 \
    --duration P14D
 ```
