@@ -37,11 +37,9 @@ pipeline {
 
         stage("Nexus Lifecycle") {
             steps {
-                nexusPolicyEvaluation failBuildOnNetworkError: false, 
-                    iqApplication: 'com.baloise.open.stripe2paypal.stripe2paypal-csv', 
+                nexusPolicyEvaluation iqApplication: 'com.baloise.open.stripe2paypal.stripe2paypal-csv', 
                     iqScanPatterns: [[scanPattern: 'target/dependency/*.jar']], 
-                    iqStage: 'build', 
-                    jobCredentialsId: ''
+                    iqStage: 'build'
             }
         }
     }
