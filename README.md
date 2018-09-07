@@ -37,5 +37,3 @@ usage: java -jar stripe2paypal-csv.jar
 ```
 
 ## setup [docs](docs/index.md)
-
-## our [code of conduct](https://baloise.github.io/open-source/docs/md/guides/governance.html#code-of-conduct)
