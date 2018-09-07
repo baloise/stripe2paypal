@@ -10,7 +10,7 @@
 
 Conversion of [Stripe BalanceTransactions](https://stripe.com/docs/api#balance) to a [Paypal like "monthly statement"-report](https://www.paypalobjects.com/webstatic/en_US/developer/docs/pdf/PP_GenMonthlyStatementReport.pdf).
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ec9aa155f0334e058e72d56c1f7089aa)](https://app.codacy.com/app/MarkusTiede/stripe2paypal?utm_source=github.com&utm_medium=referral&utm_content=baloise/stripe2paypal&utm_campaign=Badge_Grade_Dashboard)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/ec9aa155f0334e058e72d56c1f7089aa)](https://app.codacy.com/app/baloise/stripe2paypal?utm_source=github.com&utm_medium=referral&utm_content=baloise/stripe2paypal&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/baloise/stripe2paypal.svg?branch=master)](https://travis-ci.org/baloise/stripe2paypal)
 
 ```
