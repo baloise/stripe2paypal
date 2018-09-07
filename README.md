@@ -12,6 +12,7 @@ Conversion of [Stripe BalanceTransactions](https://stripe.com/docs/api#balance) 
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/ec9aa155f0334e058e72d56c1f7089aa)](https://app.codacy.com/app/baloise/stripe2paypal?utm_source=github.com&utm_medium=referral&utm_content=baloise/stripe2paypal&utm_campaign=Badge_Grade_Dashboard)
 [![Build Status](https://travis-ci.org/baloise/stripe2paypal.svg?branch=master)](https://travis-ci.org/baloise/stripe2paypal)
+[![gitpod-IDE](https://img.shields.io/badge/open--IDE-as--gitpod-blue.svg?style=flat&label=openIDE)](https://gitpod.io#https://github.com/baloise/stripe2paypal)
 
 ```
 mvn clean verify -DskipTests && java -jar target/stripe2paypal-csv.jar \
