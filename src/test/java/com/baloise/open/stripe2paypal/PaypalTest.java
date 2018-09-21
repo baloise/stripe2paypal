@@ -4,6 +4,7 @@
 package com.baloise.open.stripe2paypal;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import com.braintreepayments.http.HttpResponse;
@@ -32,6 +33,7 @@ class PaypalTest {
     }
 
     @Test
+    @Disabled
     void testPaymentHistory() throws Exception {
         PayPalHttpClient client = new PayPalHttpClient(env);
         HttpResponse<PaymentHistory> response = client.execute(
