@@ -4,11 +4,14 @@
 package com.baloise.open.stripe2paypal;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
+import com.braintreepayments.http.HttpResponse;
 import com.paypal.core.PayPalEnvironment;
 import com.paypal.core.PayPalHttpClient;
+import com.paypal.sdk.v1.payments.Payment;
+import com.paypal.sdk.v1.payments.PaymentHistory;
+import com.paypal.sdk.v1.payments.PaymentListRequest;
 
 /**
  * @author Markus Tiede
@@ -25,17 +28,18 @@ class PaypalTest {
     /** @throws java.lang.Exception */
     @BeforeEach
     void setUpBeforeClass() throws Exception {
-        // env = new PayPalEnvironment.Sandbox(CLIENT_ID, CLIENT_SECRET);
+        env = new PayPalEnvironment.Sandbox(CLIENT_ID, CLIENT_SECRET);
     }
 
     @Test
-    @Disabled
-    void testBalanceTransactionsNotEmpty() throws Exception {
+    void testPaymentHistory() throws Exception {
         PayPalHttpClient client = new PayPalHttpClient(env);
-    }
-
-    @Test
-    @Disabled
-    void testBalanceTransactionReportCreation() throws Exception {
+        HttpResponse<PaymentHistory> response = client.execute(
+                new PaymentListRequest());
+        PaymentHistory history = response.result();
+        
+        for (Payment payment : history.payments()) {
+            System.out.println(payment.id());
+        }
     }
 }
